@@ -37,6 +37,7 @@ public class World {
                             Aeroport aeroport = new Aeroport(iataCode, name, country, latitude, longitude);
                             aeroportList.add(aeroport);
                         } catch (NumberFormatException e) {
+                            // Ignorer les lignes avec des coordonnées incorrectes
                             System.err.println("Coordonnées incorrectes pour la ligne : " + line);
                         }
                     }
@@ -55,7 +56,7 @@ public class World {
         double minDistance = Double.MAX_VALUE;
 
         for (Aeroport aeroport : aeroportList) {
-            double distance = distance(longitude, latitude, aeroport.getLongitude(), aeroport.getLatitude());
+            double distance = aeroport.calculDistance(refAeroport);
             if (distance < minDistance) {
                 minDistance = distance;
                 nearest = aeroport;
@@ -73,7 +74,7 @@ public class World {
         return null; // Retourne null si aucun aéroport avec ce code n'est trouvé
     }
 
-    public static double distance(double longitude1, double latitude1, double longitude2, double latitude2) {
+    public double distance(double longitude1, double latitude1, double longitude2, double latitude2) {
         double deltaTheta = latitude2 - latitude1;
         double deltaPhi = longitude2 - longitude1;
         double cosAverageTheta = Math.cos(Math.toRadians((latitude2 + latitude1) / 2));

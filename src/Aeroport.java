@@ -1,5 +1,5 @@
 public class Aeroport {
-    // Attributs de la classe
+    // Attributs
     private String IATA;
     private String name;
     private String country;
@@ -15,31 +15,39 @@ public class Aeroport {
         this.longitude = longitude;
     }
 
-    // Getters
+    // Getter pour le code IATA
     public String getIATA() {
         return IATA;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
+    // Getter pour la latitude
     public double getLatitude() {
         return latitude;
     }
 
+    // Getter pour la longitude
     public double getLongitude() {
         return longitude;
     }
 
-    // Surcharge de la méthode toString pour afficher les informations de l'aéroport
+    public double calculDistance(Aeroport autre) {
+        // Récupération des latitudes et longitudes des deux aéroports
+        double theta1 = this.latitude;
+        double theta2 = autre.getLatitude();
+        double phi1 = this.longitude;
+        double phi2 = autre.getLongitude();
+
+        // Calcul de la norme selon la formule fournie
+        double distance = Math.pow((theta2 - theta1), 2) +
+                Math.pow((phi2 - phi1) * Math.cos(Math.toRadians((theta2 + theta1) / 2)), 2);
+
+        return distance;
+    }
+
+    // Surcharge de la méthode toString
     @Override
     public String toString() {
-        return "Aeroport {" +
+        return "Aeroport{" +
                 "IATA='" + IATA + '\'' +
                 ", name='" + name + '\'' +
                 ", country='" + country + '\'' +
